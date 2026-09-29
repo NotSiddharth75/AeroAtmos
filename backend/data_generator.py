@@ -1,5 +1,5 @@
 """
-data_generator.py
+data_generator.py — AeroAtmos synthetic dataset
 Generates a synthetic dataset that stands in for real IMD block-level
 forecasts + panchayat-level geospatial/historical data, so you can train
 and demo the downscaling model without waiting on real data access.
@@ -39,12 +39,19 @@ LAND_USE = ["paddy", "wheat_maize", "vegetable", "mixed_agri", "fallow"]
 
 rows = []
 pid = 1
+# Approximate block-centre coordinates (lat, lon) so the map shows panchayats
+# in the right part of Bihar. Replace with real Census/SDMA panchayat centroids later.
+BLOCK_CENTERS = {
+    "Masaurhi":  (25.35, 85.04),
+    "Bikram":    (25.44, 84.86),
+    "Naubatpur": (25.36, 84.93),
+    "Tikari":    (24.93, 84.85),
+    "Sherghati": (24.55, 84.79),
+}
+
 for district, blocks in STRUCTURE.items():
-    base_lat = 25.3 + rng.uniform(-0.4, 0.4)
-    base_lon = 84.9 + rng.uniform(-0.5, 0.5)
     for block, panchayats in blocks.items():
-        block_lat = base_lat + rng.uniform(-0.15, 0.15)
-        block_lon = base_lon + rng.uniform(-0.15, 0.15)
+        block_lat, block_lon = BLOCK_CENTERS[block]
         for panch in panchayats:
             lat = block_lat + rng.uniform(-0.05, 0.05)
             lon = block_lon + rng.uniform(-0.05, 0.05)

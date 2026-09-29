@@ -89,6 +89,8 @@ def predict_panchayat(row: pd.Series, month: int) -> dict:
         "panchayat": row.panchayat,
         "block": row.block,
         "district": row.district,
+        "lat": float(row.lat),
+        "lon": float(row.lon),
         "block_forecast_rain_mm": block_fc["block_forecast_rain_mm"],
         "rainfall_mm": rain,
         "temperature_c": temp,
